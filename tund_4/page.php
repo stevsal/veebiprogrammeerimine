@@ -1,18 +1,31 @@
 <?php
+  //kutsume välja funktsioonide faili
+  require ("functions.php");
+  
   //echo "See on minu esimene PHP!";
   $firstname = "Kodanik";
   $lastname = "Tundmatu";
+  $currentmonth = date("n") - "";
   
   //kontrollime, kas kasutaja on midagi kirjutanud
   //var_dump($_POST);
   if (isset($_POST["firstname"])){
-	  $firstname = $_POST["firstname"];
+	  //$firstname = $_POST["firstname"];
+	  $firstname = test_input($_POST["firstname"]);
   }	
   if (isset($_POST["lastname"])){
-	  $lastname = $_POST["lastname"];
+	  $lastname = test_input($_POST["lastname"]);
   }
-  $currentmonth = date("n") - "";
- 
+  
+  
+//täiesti mõttetu, harjutamiseks funktsioon
+function fullname(){
+	$GLOBALS["fullname"] = $GLOBALS["firstname"] ." " .$GLOBALS["lastname"];
+  }
+  $fullname = "";
+  fullname ();
+  
+  
 ?>
 
 <!DOCTYPE html>
@@ -35,11 +48,11 @@
 	<p>See leht on loodud <a href="http://www.tlu.ee" target="_blank">TLÜ</a> õppetöö raames, ei pruugi parim väljanäha ning kindlasti ei sisalda tõsiseltvõetavat sisu!</p>
 	
 	<hr>
-	<form method="POST">
+	<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	<label>Eesnimi:</label>
-	<input type="text" name="firstname">
+	<input type="text" name="firstname" placeholder="Firstname">
 	<label>Perekonnanimi:</label>
-	<input type="text" name="lastname">
+	<input type="text" name="lastname" placeholder="Lastname">
 	<label>Sünniaasta: </label>
 	<input type="number" min="1914" max="2000" value="1999" name="birthYear">
 	<select name="birthMonth">
@@ -62,13 +75,14 @@
 	<hr>
 	<?php
 	if (isset($_POST["firstname"])){
-	  echo "<p>Olete elanud järgnevatel aastatel: </p> \n";
+	  echo "<p>" .$fullname .", olete elanud järgnevatel aastatel: </p> \n";
 	  echo"<ol> \n";
 	    for ($i = $_POST["birthYear"]; $i <= date("Y"); $i++) {
 			echo "<li>" .$i ."</li> \n";
 		}
 	  echo "</ol> \n";
     }	 
+
 	
 	?>
 

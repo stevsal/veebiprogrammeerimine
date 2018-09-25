@@ -11,7 +11,6 @@
   if (isset($_POST["lastname"])){
 	  $lastname = $_POST["lastname"];
   }
-  $currentmonth = date("n") - "";
  
 ?>
 
@@ -42,21 +41,7 @@
 	<input type="text" name="lastname">
 	<label>Sünniaasta: </label>
 	<input type="number" min="1914" max="2000" value="1999" name="birthYear">
-	<select name="birthMonth">
-      <option value="1"<?php if ($currentmonth == 1) echo 'selected'; ?> >jaanuar</option>
-      <option value="2"<?php if ($currentmonth == 2) echo 'selected'; ?>>veebruar</option>
-      <option value="3"<?php if ($currentmonth == 3) echo 'selected'; ?>>märts</option>
-      <option value="4"<?php if ($currentmonth == 4) echo 'selected'; ?>>aprill</option>
-      <option value="5"<?php if ($currentmonth == 5) echo 'selected'; ?>>mai</option>
-      <option value="6"<?php if ($currentmonth == 6) echo 'selected'; ?>>juuni</option>
-      <option value="7"<?php if ($currentmonth == 7) echo 'selected'; ?>>juuli</option>
-      <option value="8"<?php if ($currentmonth == 8) echo 'selected'; ?>>august</option>
-      <option value="9"<?php if ($currentmonth == 9) echo 'selected'; ?>>september</option>
-      <option value="10"<?php if ($currentmonth == 10) echo 'selected'; ?>>oktoober</option>
-      <option value="11"<?php if ($currentmonth == 11) echo 'selected'; ?>>november</option>
-      <option value="12"<?php if ($currentmonth == 12) echo 'selected'; ?>>detsember</option>
-	  <br>
-</select>
+	<br>
 	<input type="submit" name="submitUserData" value="Saada andmed">
 	</form>
 	<hr>
