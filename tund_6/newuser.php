@@ -2,7 +2,7 @@
   require("functions.php");
   $notice = "";
   $firstname = "";
-  $surname = "";
+  $lastname = "";
   $email = "";
   $gender = "";
   $birthMonth = null;
@@ -13,7 +13,7 @@
   
   //muutujad võimalike veateadetega
   $firstnameError = "";
-  $surnameError = "";
+  $lastnameError = "";
   $birthMonthError = "";
   $birthYearError = "";
   $birthDayError = "";
@@ -26,16 +26,16 @@
   //kui on uue kasutaja loomise nuppu vajutatud
   if(isset($_POST["submitUserData"])){
   
-  if (isset($_POST["firstName"]) and !empty($_POST["firstName"])){
-	$name = test_input($_POST["firstName"]);
+  if (isset($_POST["firstname"]) and !empty($_POST["firstname"])){
+	$firstname = test_input($_POST["firstname"]);
   } else {
-	  $nameError = "Palun sisesta eesnimi!";
+	  $firstnameError = "Palun sisesta eesnimi!";
   }
   
-  if (isset($_POST["surname"]) and !empty($_POST["surname"])){
-	$surname = test_input($_POST["surname"]);
+  if (isset($_POST["lastname"]) and !empty($_POST["lastname"])){
+	$lastname = test_input($_POST["lastname"]);
   } else {
-	  $surnameError = "Palun sisesta perekonnanimi!";
+	  $lastnameError = "Palun sisesta perekonnanimi!";
   }
   
   if(isset($_POST["gender"])){
@@ -99,8 +99,8 @@
   }
   
   //kui kõik on korras, siis salvestame kasutaja
-  if(empty($nameError) and empty($surnameError) and empty($birthMonthError) and empty($birthYearError) and empty($birthDayError) and empty($genderError) and empty($emailError) and empty($passwordError) and empty($confirmpasswordError)){
-    $notice = signup($name, $surname, $email, $gender, $birthDate, $_POST["password"]);
+  if(empty($firstnameError) and empty($lastnameError) and empty($birthMonthError) and empty($birthYearError) and empty($birthDayError) and empty($genderError) and empty($emailError) and empty($passwordError) and empty($confirmpasswordError)){
+    $notice = signup($firstname, $lastname, $birthDate, $gender, $email, $_POST["password"]);
   }
   
   }//kui on nuppu vajutatud - lõppeb
@@ -121,7 +121,7 @@
 	  <label>Eesnimi:</label><br>
 	  <input name="firstname" type="text" value="<?php echo $firstname; ?>"><span><?php echo $firstnameError; ?></span><br>
       <label>Perekonnanimi:</label><br>
-	  <input name="surname" type="text" value="<?php echo $surname; ?>"><span><?php echo $surnameError; ?></span><br>
+	  <input name="lastname" type="text" value="<?php echo $lastname; ?>"><span><?php echo $lastnameError; ?></span><br>
 	  
 	  <input type="radio" name="gender" value="2" <?php if($gender == "2"){		echo " checked";} ?>><label>Naine</label>
 	  <input type="radio" name="gender" value="1" <?php if($gender == "1"){		echo " checked";} ?>><label>Mees</label><br>

@@ -4,6 +4,9 @@
   //echo $GLOBALS["serverUsername"];
   $database = "if18_steven_sa_1";
   
+  //võtan kasutusele sessiooni
+  session_start();
+  
   //lokaalsed muutujad mis kutsutakse välja. nimed ei ole olulised kuid andmed tulevad järjekorras mis leheküljel määratud
   function signup($firstname,$lastname,$birthDate,$gender,$email,$password){
 	  $notice = "";
@@ -30,21 +33,24 @@
   //Sisselogimine
   function signin($email, $password){
 	  $notice = "";
-	  $mysql = new mysqli ($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
-	 $stmt = $mysqli->prepare("SELECT id, password FROM vpusers1 WHERE email=?");
+	  $mysqli = new mysqli ($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	 $stmt = $mysqli->prepare("SELECT id, firstname, lastname, password FROM vpusers WHERE email=?");
 	 $mysqli->error;
 	 $stmt->bind_param("s", $email);
-	 $stmt->bind_result($idFromDb, $passwordFromDb);
+	 $stmt->bind_result($idFromDb, $firstnameFromDb, $lastnameFromDb, $passwordFromDb);
 	 if ($stmt->execute()){
 		 //kui õnnestus andmebaasist lugemine
 		 if($stmt->fetch()){
 			 //leiti selline kasutaja
-			 if(password_verify($password, $passwordFromdDb)){
+			 if(password_verify($password, $passwordFromDb)){
 			 //parool õige
 				 $notice = "Logisite õnnelikult sisse!";
+				 $_SESSION["userId"] = $idFromDb;
+				 $_SESSION["firstname"] = $firstnameFromDb;
+				 $_SESSION["lastname"] = $lastnameFromDb;
 				 $stmt->close();
 				 $mysqli->close();
-				 header("Location: Main.php")
+				 header("Location: Main.php");
 				 exit();
 				 
 			 } else {
