@@ -7,6 +7,40 @@
   //võtan kasutusele sessiooni
   session_start();
   
+  //valideerimate sõnumite lugemine
+  function readallunvalidatedmessages(){
+	$notice = "<ul> \n";
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT id, message FROM vpamsg WHERE accepted IS NULL ORDER BY id DESC");
+	echo $mysqli->error;
+	$stmt->bind_result($id, $msg);
+	$stmt->execute();
+	
+	while($stmt->fetch()){
+		$notice .= "<li>" .$msg .'<br><a href="validatemessage.php?id=' .$id .'">Valideeri</a>' ."</li> \n";
+	}
+	$notice .= "</ul> \n";
+	$stmt->close();
+	$mysqli->close();
+	return $notice;
+  }
+  
+    //loen sõnumi valideerimiseks
+  function readmsgforvalidation($editId){
+	$notice = "";
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT message FROM vpamsg WHERE id = ?");
+	$stmt->bind_param("i", $editId);
+	$stmt->bind_result($msg);
+	$stmt->execute();
+	if($stmt->fetch()){
+		$notice = $msg;
+	}
+	$stmt->close();
+	$mysqli->close();
+	return $notice;
+  }
+  
   //lokaalsed muutujad mis kutsutakse välja. nimed ei ole olulised kuid andmed tulevad järjekorras mis leheküljel määratud
   function signup($firstname,$lastname,$birthDate,$gender,$email,$password){
 	  $notice = "";

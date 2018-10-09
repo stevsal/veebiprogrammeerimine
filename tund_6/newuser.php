@@ -119,9 +119,9 @@
 	
 	<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	  <label>Eesnimi:</label><br>
-	  <input name="firstname" type="text" value="<?php echo $firstname; ?>"><span><?php echo $firstnameError; ?></span><br>
+	  <input name="firstname" type="text" placeholder="Firstname" value="<?php echo $firstname; ?>"><span><?php echo $firstnameError; ?></span><br>
       <label>Perekonnanimi:</label><br>
-	  <input name="lastname" type="text" value="<?php echo $lastname; ?>"><span><?php echo $lastnameError; ?></span><br>
+	  <input name="lastname" type="text" placeholder="Lastname" value="<?php echo $lastname; ?>"><span><?php echo $lastnameError; ?></span><br>
 	  
 	  <input type="radio" name="gender" value="2" <?php if($gender == "2"){		echo " checked";} ?>><label>Naine</label>
 	  <input type="radio" name="gender" value="1" <?php if($gender == "1"){		echo " checked";} ?>><label>Mees</label><br>
@@ -171,7 +171,7 @@
 	  <br>
 	  
 	  <label>E-mail (kasutajatunnus):</label><br>
-	  <input type="email" name="email" value="<?php echo $email; ?>"><span><?php echo $emailError; ?></span><br>
+	  <input type="email" name="email" placeholder="kodanik@sait.com" value="<?php echo $email; ?>"><span><?php echo $emailError; ?></span><br>
 	  <label>Salasõna (min 8 tähemärki):</label><br>
 	  <input name="password" type="password"><span><?php echo $passwordError; ?></span><br>
 	  <label>Korrake salasõna:</label><br>

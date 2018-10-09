@@ -1,7 +1,7 @@
 <?php
   //kutsume välja funktsioonide faili
   require ("functions.php");
-  
+  //UPDATE vpamsg SET acceptedby=?, accepted=?, accepttime=now() WHERE id=?
   //echo "See on minu esimene PHP!";
   $notice="";
   $firstname = "";
