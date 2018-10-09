@@ -49,4 +49,34 @@
   $data = htmlspecialchars($data);
   return $data;
   }
+  
+  function savekass($nimi, $v2rv, $saba) {
+    $mysqli = new mysqli($GLOBALS["serverHost"],$GLOBALS["serverUsername"],$GLOBALS["serverPassword"], $GLOBALS["database"]);
+    $stmt = $mysqli->prepare('INSERT INTO kass (nimi, v2rv, saba) VALUES (:nimi, :v2rv, :saba)');
+	echo $mysqli->error;
+	$stmt->bind_param("s",$msg);
+	 if ($stmt->execute()) {
+		 $notice = 'Sõnum: "' .$msg .'" on salvestatud.';
+	 } else {
+		 $notice = "Sõnumi salvestamisel tekkis tõrge: " .$stmt->error;
+	 }	
+	 $stmt->close();
+	 $mysqli->close();
+	 return $notice;
+
+  }
+	function readkass() {
+	  $msgHTML = "";
+	  $mysqli = new mysqli($GLOBALS["serverHost"],$GLOBALS["serverUsername"],$GLOBALS["serverPassword"], $GLOBALS["database"]);
+	  $stmt = $mysqli->prepare('SELECT nimi, v2rv, saba FROM kass');
+	  echo $mysqli->error;
+	  $stmt->bind_result($msg);
+	  $stmt->execute();
+	  while($stmt->fetch()){
+		  $msgHTML .= "<p>" .$msg ."</p> \n";
+	  }
+	  $stmt->close();
+	  $mysqli->close();
+    return $stmt->fetchAll();
+  }
 ?>
