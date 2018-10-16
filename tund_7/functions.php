@@ -7,8 +7,33 @@
   //võtan kasutusele sessiooni
   session_start();
   
+  //Kasutaja profiili funktsioon
+  function createprofile(){
+	  $notice = "";
+	  $mysqli = new mysqli($GLOBALS["serverHost"],$GLOBALS["serverUsername"],$GLOBALS["serverPassword"], $GLOBALS["database"]);
+	  $stmt = $mysqli->prepare("SELECT userid, description, bgcolor, bgtext WHERE userid=?");
+	  $stmt->bind_param("i", $_SESSION["userId"]);
+	  $stmt->bind_result($userid,$description,$bgcolor,$bgtext);
+	  if($stmt->execute()){
+		  if($stmt->fetch()){
+			$stmt = $mysqli->prepare("UPDATE vpuserprofiles (description, bgcolor, bgtext) VALUES (?, ?, ?) WHERE userid = ?");
+		    $stmt->bind_param("isss",$_SESSION["userId"],$description,$bgcolor,$bgtext);
+		  } else {
+			$stmt = $mysqli->prepare("INSERT INTO vpuserprofiles (userid, description, bgcolor, bgtext) VALUES (?, ?, ?, ?)");
+			$stmt->bind_param("isss",$_SESSION["userId"],$description,$bgcolor,$bgtext);
+			$notice = "Profiili tekitamine õnnestus";
+			
+		  }
+	  }
+	  $stmt->close();
+	 $mysqli->close();
+	 return $notice;
+  }
+  
+  
   //Kõigi valideeritud sõnumite lugemine kasutajate kaupa
   function readallvalidatedmessagesbyuser(){
+	  $totalhtml = "";
 	  $msghtml = "";
 	  $mysqli = new mysqli($GLOBALS["serverHost"],$GLOBALS["serverUsername"],$GLOBALS["serverPassword"], $GLOBALS["database"]);
 	  $stmt = $mysqli->prepare("SELECT id, firstname, lastname from vpusers");
@@ -22,23 +47,31 @@
 	  $stmt->execute();
 	  //et hoida andmebaasist loetud andmeid pisut kauem mälus, saaks edasi kasutada
 	  $stmt->store_result();
+	  
 	  while($stmt->fetch()){
-		  $msghtml .= "<h3>" .$firstnamefromDB ." " .$lastnamefromDB ."</h3> \n";
+		  //$msghtml = "";
+		  $counter = 0;
+		  $msghtml = "<h3>" .$firstnamefromDB ." " .$lastnamefromDB ."</h3> \n";
 		  $stmt2->execute();
 		  while($stmt2->fetch()){
 			  $msghtml .= "<p><b>";
 			  if($acceptedfromDB == 1){
 				  $msghtml .= "Lubatud: ";
 			  } else {
-					$msghtml.= "Keelatud: ";  
+					$msghtml.= "Keelatud: ";
 			  }
 			  $msghtml.= "</b>" .$msgfromDB ."</p> \n";
+			  $counter ++;
 		  }
-	  }
+		  if ($counter > 0){
+			  $totalhtml .= $msghtml;
+		  }
+	  }	  
+	  //echo $counter;
 	  $stmt2->close();
 	  $stmt->close();
 	  $mysqli->close();
-	  return $msghtml;
+	  return $totalhtml;
   }
   
   //kasutajate väljakutsumise funkstioon
