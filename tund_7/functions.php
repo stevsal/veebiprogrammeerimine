@@ -11,16 +11,18 @@
   function createprofile(){
 	  $notice = "";
 	  $mysqli = new mysqli($GLOBALS["serverHost"],$GLOBALS["serverUsername"],$GLOBALS["serverPassword"], $GLOBALS["database"]);
-	  $stmt = $mysqli->prepare("SELECT userid, description, bgcolor, bgtext WHERE userid=?");
+	  $stmt = $mysqli->prepare("SELECT userid, description, bgcolor, bgtext FROM vpuserprofiles WHERE userid=?");
 	  $stmt->bind_param("i", $_SESSION["userId"]);
 	  $stmt->bind_result($userid,$description,$bgcolor,$bgtext);
 	  if($stmt->execute()){
 		  if($stmt->fetch()){
-			$stmt = $mysqli->prepare("UPDATE vpuserprofiles (description, bgcolor, bgtext) VALUES (?, ?, ?) WHERE userid = ?");
-		    $stmt->bind_param("isss",$_SESSION["userId"],$description,$bgcolor,$bgtext);
+			$stmt = $mysqli->prepare("UPDATE vpuserprofiles SET description=?, bgcolor=?, bgtext=? WHERE userid = ?");
+		    $stmt->bind_param("sssi",$description,$bgcolor,$bgtext,$_SESSION["userId"]);
+			$stmt->execute();
 		  } else {
 			$stmt = $mysqli->prepare("INSERT INTO vpuserprofiles (userid, description, bgcolor, bgtext) VALUES (?, ?, ?, ?)");
 			$stmt->bind_param("isss",$_SESSION["userId"],$description,$bgcolor,$bgtext);
+			$stmt->execute();
 			$notice = "Profiili tekitamine õnnestus";
 			
 		  }

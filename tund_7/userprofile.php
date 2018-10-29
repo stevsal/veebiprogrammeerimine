@@ -40,7 +40,7 @@
         } else {
             $bgcolor = $_POST['bgcolor'];
         }
-	if (empty($descriptionError) and empty($bgtextError) and empty($bgcolorError));{
+	if (empty($descriptionError) and empty($bgtextError) and empty($bgcolorError)){
 		$notice = createprofile($description,$bgtext,$bgcolor);
 	}
 
@@ -59,10 +59,12 @@
 	<p>See leht on valminud <a href="http://www.tlu.ee" target="_blank">TLÜ</a> õppetöö raames ja ei oma mingisugust, mõtestatud või muul moel väärtuslikku sisu.</p>
 	<hr>
 	<p>Oled sisse loginud nimega: <?php echo $_SESSION["firstname"] ." " .$_SESSION["lastname"] ."."; ?></p>
-	<textarea rows="10" cols="80" name="description" placeholder="Kirjuta endast midagi"><?php echo $description; ?></textarea><br>
-	<label>Minu valitud taustavärv: </label><input name="bgcolor" type="color" value="<?php echo $bgcolor; ?>">
-	<label>Minu valitud tekstivärv: </label><input name="bgtext" type="color" value="<?php echo $bgtext; ?>"><br>
-	<input type="submit" name="submitprofile" value="Salvesta profiil"><span>"<?php echo $notice; ?>"</span>
+	<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+		<textarea rows="10" cols="80" name="description" placeholder="Kirjuta endast midagi"><?php echo $description; ?></textarea><br>
+		<label>Minu valitud taustavärv: </label><input name="bgcolor" type="color" value="<?php echo $bgcolor; ?>">
+		<label>Minu valitud tekstivärv: </label><input name="bgtext" type="color" value="<?php echo $bgtext; ?>"><br>
+		<input type="submit" name="submitprofile" value="Salvesta profiil"><span>"<?php echo $notice; ?>"</span>
+	</form>
 	<ul>
 	   <li><a href="Main.php">Pealehele</a></li>
 	</ul>
