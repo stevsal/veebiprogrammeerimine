@@ -28,10 +28,11 @@
 	<hr>
 	<p>Oled sisse loginud nimega: <?php echo $_SESSION["firstname"] ." " .$_SESSION["lastname"] ."."; ?></p>
 	<ul>
-       <li><a href="?logout=1">Logi välja!</a></li>
+       <li><a href="userprofile">Profiili muutmine.</a></li>
 	   <li><a href="users.php">Kasutajate süsteem</a></li>
 	   <li><a href="validatemsg.php">Valideeri anonüümseid sõnumeid</a></li>
 	   <li>Näita valideerituid <a href="validatedmsg.php">sõnumeid</a> valideerijate kaupa!</li>
+	   <li><a href="?logout=1">Logi välja!</a></li>
 	</ul>
 	
   </body>

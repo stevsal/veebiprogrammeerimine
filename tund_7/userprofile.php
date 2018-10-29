@@ -14,13 +14,36 @@
 	  exit();
   }
   
+  $description = "";
+  $bgcolor = "";
+  $bgtext = "";
+  $notice = "";
+  
+  $descriptionError = "";
+  $bgcolorError = "";
+  $bgtextError = "";
+  
   if (isset($_POST["submitprofile"])){
-  if ($_POST["description"] != "Siia sisesta oma sõnum ..." and !empty($_POST["message"])){
-	 $message = test_input($_POST["message"]);
-     $notice = createprofile($message);
+  if ($_POST["description"] != "Siia sisesta oma sõnum ..." and !empty($_POST["description"])){
+	 $description = test_input($_POST["description"]);
+     $notice = createprofile($description);
    } else {
-	  $notice = "Palun kirjuta sõnum!";   
+	  $descriptionError = "Palun kirjuta sõnum!";   
    }
+   if (isset($_POST["bgtext"])) {
+            $bgtextError['bgtext'] = 'Palun vali tekstivärv';
+        } else {
+            $bgtext = $_POST['bgtext'];
+        }
+        if (isset($_POST['bgcolor'])) {
+            $bgcolorError['bgcolor'] = 'Palun vali taustavärv';
+        } else {
+            $bgcolor = $_POST['bgcolor'];
+        }
+	if (empty($descriptionError) and empty($bgtextError) and empty($bgcolorError));{
+		$notice = createprofile($description,$bgtext,$bgcolor);
+	}
+
   }
   
 ?>
@@ -36,10 +59,10 @@
 	<p>See leht on valminud <a href="http://www.tlu.ee" target="_blank">TLÜ</a> õppetöö raames ja ei oma mingisugust, mõtestatud või muul moel väärtuslikku sisu.</p>
 	<hr>
 	<p>Oled sisse loginud nimega: <?php echo $_SESSION["firstname"] ." " .$_SESSION["lastname"] ."."; ?></p>
-	<textarea rows="10" cols="80" name="description"><?php echo $description; ?></textarea><br>
+	<textarea rows="10" cols="80" name="description" placeholder="Kirjuta endast midagi"><?php echo $description; ?></textarea><br>
 	<label>Minu valitud taustavärv: </label><input name="bgcolor" type="color" value="<?php echo $bgcolor; ?>">
-	<label>Minu valitud tekstivärv: </label><input name="bgcolor" type="color" value="<?php echo $txtcolor; ?>"><br>
-	<input type="submit" name="submitprofile" value="Salvesta profiil">
+	<label>Minu valitud tekstivärv: </label><input name="bgtext" type="color" value="<?php echo $bgtext; ?>"><br>
+	<input type="submit" name="submitprofile" value="Salvesta profiil"><span>"<?php echo $notice; ?>"</span>
 	<ul>
 	   <li><a href="Main.php">Pealehele</a></li>
 	</ul>
