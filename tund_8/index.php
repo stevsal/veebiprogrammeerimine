@@ -3,6 +3,11 @@
   $firstname = "Steven";
   $lastname = "Saluri";
   $datetoday = date("d.m.Y");
+  $weekdaynow = date("N");
+  $weekdaynamesET = ["esmaspäev", "teisipäev", "kolmapäev", "neljapäev", "reede", "laupäev", "pühapäev"];
+  //echo $weekdaynamesET[1];
+  //var_dump($weekdaynamesET);
+  //echo $weekdaynow;
   $hournow = date("G");
   $partofday = "";
   if ($hournow <  8){
@@ -14,6 +19,12 @@
   if ($hournow >= 16){
 	  $partofday = "ilmselt vaba aeg";
   }
+  
+  $picNum = mt_rand(2, 43);
+  //echo $picNum;
+  $picURL = "http://www.cs.tlu.ee/~rinde/media/fotod/TLU_600x400/tlu_";
+  $picEXT = ".jpg";
+  $picfile = $picURL .$picNum .$picEXT;
 ?>
 
 <!DOCTYPE html>
@@ -35,19 +46,17 @@
 	   ?>, IF18</h1>
 	<p>See leht on loodud <a href="http://www.tlu.ee" target="_blank">TLÜ</a> õppetöö raames, ei pruugi parim väljanäha ning kindlasti ei sisalda tõsiseltvõetavat sisu!</p>
 	<p>Testing testing 1-2-3</p>
-	<li><a href="tund_3">Tund_3</a></li>
-	<li><a href="tund_4">Tund_4</a></li>
-	<li><a href="tund_5">Tund_5</a></li>
-	<li><a href="tund_6">Tund_6</a></li>
-	<li><a href="tund_7/Main.php">Tund_7</a></li>
-	<li><a href="tund_8/Main.php">Tund_8</a></li>
+	<p>Tundides tehtu: <a href="photo.php" target="_blank">photo.php</a> <a href="page.php" target="_blank">page.php</a><p>
 	<?php
-	  echo "<p>Tänane kuupäev on: " .$datetoday .".</p> \n";
+	  //echo "<p>Tänane kuupäev on: " .$datetoday .".</p> \n";
+	  //echo "<p>Täna on " .$weekdaynow .", ".$datetoday .".</p> \n";
+	  echo "<p>Täna on " .$weekdaynamesET[$weekdaynow - 1] .", ".$datetoday .".</p> \n";
 	  echo "<p>Lehe avamise hetkel oli kell " .date("H:i:s") .". Käes oli " .$partofday .".</p> \n";
 	?>
 	<!--<img src="http://greeny.cs.tlu.ee/~rinde/veebiprogrammeerimine2018s/tlu_terra_600x400_2.jpg" alt="TLÜ Terra õppehoone">-->
-	<img src="../../~rinde/veebiprogrammeerimine2018s/tlu_terra_600x400_2.jpg" alt="TLÜ Terra õppehoone">
-	<p>Mul on ka sõber, kes teeb ka oma <a href="../../~rasmlii " target="_blank">veebi.</a></p>
+	<!--<img src="../../../~rinde/veebiprogrammeerimine2018s/tlu_terra_600x400_2.jpg" alt="TLÜ Terra õppehoone">-->
+	<img src="<?php echo $picfile; ?>" alt="TLÜ õppehooned">
+	<p>Mul on ka sõber, kes teeb ka oma <a href="../../../~rasmlii " target="_blank">veebi.</a></p>
 
 
 </body>
