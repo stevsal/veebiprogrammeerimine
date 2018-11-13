@@ -52,7 +52,6 @@
 	$stmt->execute();
 	$profile = new Stdclass();
 	if($stmt->fetch()){
-		$profile
 		$_SESSION["bgcolor"] = $bgcolor;
 		$_SESSION["bgtext"] = $bgtext;
 	} else {

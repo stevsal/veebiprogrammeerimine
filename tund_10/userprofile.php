@@ -132,7 +132,7 @@
 				$bgcolorError['bgcolor'] = 'Palun vali taustavärv';
 			}
 		if (empty($descriptionError) and empty($bgtextError) and empty($bgcolorError)){
-			$notice = createprofile($description, $bgcolor, $bgtext, $addedPhotoId);
+			$notice = createprofile($description, $bgcolor, $bgtext);
 		}
 
   }
