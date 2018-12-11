@@ -20,16 +20,13 @@
 				return $newImage;
 			}
   
-  $description = "Pole tutvustust lisanud";
-  $bgcolor = $_SESSION["bgcolor"];
-  $bgtext = $_SESSION["bgtext"];
   $notice = "";
   
   $descriptionError = "";
   $bgcolorError = "";
   $bgtextError = "";
   
-  $target_dir = "../vp_userpics";
+  $target_dir = "../vp_userpics/";
   
   if (isset($_POST["submitprofile"])){
 	  if ($_POST["description"] != "Pole tutvustust lisanud" and !empty($_POST["description"])){
@@ -43,7 +40,7 @@
 			$imageFileType = strtolower(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION));
 			$timeStamp = microtime(1) * 10000;
 			$target_file_name = "vpuser_" .$timeStamp ."." .$imageFileType;
-			$target_file = $target_dir .$target_file_name;
+			$target_file = $target_dir . $target_file_name;
 						
 			// kas on pilt, kontrollin pildi suuruse küsimise kaudu
 			$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
@@ -147,6 +144,11 @@
   }
   $pageTitle = "Kasutajaprofiil";
   require("header.php");
+  $description = $_SESSION["description"];
+  $bgcolor = $_SESSION["bgcolor"];
+  $bgtext = $_SESSION["bgtext"];
+  $profilePic = $_SESSION["avatar"];
+  $profilepics = listuserprofilephotos($_SESSION["userId"]);
   
 ?>
 
@@ -166,6 +168,8 @@
 	<ul>
 	   <li><a href="Main.php">Pealehele</a></li>
 	</ul>
+	<hr>
+	<?php echo $profilepics; ?>
 	
   </body>
 </html>
